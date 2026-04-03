@@ -4,8 +4,10 @@
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status, Request
 from beanie import PydanticObjectId
+
+from app.main import limiter
 
 from app.api.dependencies import allow_admin, allow_all_roles, get_current_user
 from app.models.record import RecordType
@@ -17,13 +19,16 @@ router = APIRouter()
 
 
 @router.post("/", response_model=RecordResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(allow_admin)])
-async def create_record(data: RecordCreate, current_user: User = Depends(get_current_user)):
+@limiter.limit("10/minute")
+async def create_record(request: Request, data: RecordCreate, current_user: User = Depends(get_current_user)):
     """Create a new financial record. Only admins can create records."""
     return await record_service.create_record(data, current_user.id)
 
 
 @router.get("/", response_model=PaginatedResponse[RecordResponse], dependencies=[Depends(allow_all_roles)])
+@limiter.limit("30/minute")
 async def list_records(
+    request: Request,
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(20, ge=1, le=100, description="Items per page"),
     type: Optional[RecordType] = Query(None, description="Filter by type"),

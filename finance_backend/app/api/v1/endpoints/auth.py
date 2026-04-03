@@ -21,9 +21,11 @@
 #   5. Client includes JWT in Authorization header for subsequent requests
 # =============================================================================
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import Depends
+
+from app.main import limiter
 
 from app.core.security import hash_password, verify_password, create_access_token
 from app.models.user import User, Role
@@ -56,7 +58,8 @@ router = APIRouter()
         400: {"description": "Email already registered or validation error"},
     },
 )
-async def register(user_data: UserCreate):
+@limiter.limit("3/minute")
+async def register(request: Request, user_data: UserCreate):
     """
     Register a new user in the system.
 
@@ -132,7 +135,8 @@ async def register(user_data: UserCreate):
         403: {"description": "Account is deactivated"},
     },
 )
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+@limiter.limit("5/minute")
+async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     """
     Authenticate a user and return a JWT access token.
 

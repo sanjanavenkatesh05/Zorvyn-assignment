@@ -18,7 +18,7 @@
 
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, records, dashboard
+from app.api.v1.endpoints import auth, records, dashboard, users
 
 # ---------------------------------------------------------------------------
 # Main API v1 Router
@@ -46,6 +46,13 @@ api_router.include_router(
     dashboard.router,
     prefix="/dashboard",
     tags=["Dashboard"],
+)
+
+# ── Users Routes ─────────────────────────────────────────────────────────────
+api_router.include_router(
+    users.router,
+    prefix="/users",
+    tags=["Users"],
 )
 
 # ── Records Routes ───────────────────────────────────────────────────────────
