@@ -7,7 +7,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status, Request
 from beanie import PydanticObjectId
 
-from app.main import limiter
+from app.core.rate_limit import limiter
 
 from app.api.dependencies import allow_admin, allow_all_roles, get_current_user
 from app.models.record import RecordType

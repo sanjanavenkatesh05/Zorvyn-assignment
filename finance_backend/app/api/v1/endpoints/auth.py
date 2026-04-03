@@ -25,7 +25,7 @@ from fastapi import APIRouter, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import Depends
 
-from app.main import limiter
+from app.core.rate_limit import limiter
 
 from app.core.security import hash_password, verify_password, create_access_token
 from app.models.user import User, Role
