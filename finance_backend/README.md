@@ -2,7 +2,7 @@
 
 A high-performance, production-ready backend built for the Zorvyn Finance Dashboard. It provides a robust foundation for managing financial records, analyzing trends, and enforcing strict role-based access control (RBAC).
 
-## 🚀 Tech Stack
+## Technology Stack
 
 *   **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python 3.11+)
 *   **Database**: MongoDB
@@ -13,12 +13,12 @@ A high-performance, production-ready backend built for the Zorvyn Finance Dashbo
 
 ---
 
-## ⚙️ Setup Process
+## Setup Process
 
 ### Option 1: Docker (Recommended)
 The easiest way to run the application is via Docker Compose, which automatically provisions both the FastAPI server and a local MongoDB instance.
 
-1. Ensure **Docker Desktop** is running.
+1. Ensure Docker Desktop is running.
 2. In the project root (`finance_backend`), run:
    ```bash
    docker compose up --build -d
@@ -40,7 +40,7 @@ If you prefer running it locally without Docker:
 
 ---
 
-## 📖 API Explanation & Documentation
+## API Documentation & Architecture
 
 All endpoint interactions are strictly typed and documented automatically via OpenAPI. Once the server is running, you can explore the endpoints interactively:
 
@@ -53,14 +53,14 @@ All endpoint interactions are strictly typed and documented automatically via Op
 3. **Dashboard (`/api/v1/dashboard`)**: Analytics endpoints (`/summary`, `/category-breakdown`, `/monthly-trends`). Calculates heavily aggregated totals directly in the database.
 4. **Users (`/api/v1/users`)**: Admin-only user management (promote, demote, deactivate).
 
-### 📬 Postman Collection
+### Postman Collection
 For easy API assessment, a fully documented Postman Collection is located at:
 `../postman/Zorvyn_Finance_API.postman_collection.json`
 *Note: The collection contains a pre-request script that automatically saves your JWT into your Postman environment upon a successful `/login`.*
 
 ---
 
-## 🧠 Assumptions Made
+## Assumptions Made
 
 1. **Auto-Admin Promotion**: It is assumed that the very first user registering in the newly initialized system is the system administrator. Subsequent registrants default to `viewer` status until manually promoted.
 2. **Audit Over Deletion**: It is assumed that in a financial context, data integrity is paramount. Records are never destroyed; they are "soft-deleted" and hidden to preserve auditing capabilities.
@@ -69,7 +69,7 @@ For easy API assessment, a fully documented Postman Collection is located at:
 
 ---
 
-## ⚖️ Tradeoffs Considered
+## Tradeoffs Considered
 
 *   **MongoDB Aggregations vs. Application-Level Math**: 
     Computing the dashboard analytics (like monthly trends or total expenses) is done entirely at the database level via MongoDB Aggregation Pipelines instead of fetching all records and doing the math in Python. *Tradeoff*: Constructing `$group` and `$cond` pipelines in MongoDB syntax is slightly more complex to read/maintain than pure Python lists, but vastly improves memory efficiency and network latency.
