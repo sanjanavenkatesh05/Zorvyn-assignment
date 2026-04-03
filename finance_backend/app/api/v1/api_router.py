@@ -18,8 +18,7 @@
 
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth
-
+from app.api.v1.endpoints import auth, records
 # ---------------------------------------------------------------------------
 # Main API v1 Router
 # ---------------------------------------------------------------------------
@@ -32,6 +31,18 @@ api_router.include_router(
     auth.router,
     prefix="/auth",
     tags=["Auth"],
+)
+
+# ── Records Routes ───────────────────────────────────────────────────────────
+# POST /api/v1/records/       — Create record
+# GET /api/v1/records/        — List records
+# GET /api/v1/records/{id}    — Get record
+# PUT /api/v1/records/{id}    — Update record
+# DELETE /api/v1/records/{id} — Soft delete record
+api_router.include_router(
+    records.router,
+    prefix="/records",
+    tags=["Records"],
 )
 
 # NOTE: Additional routers (records, dashboard, users) will be added
