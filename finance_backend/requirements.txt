@@ -12,6 +12,7 @@ beanie==1.26.0             # Async ODM for MongoDB (built on Motor)
 # Authentication & Security
 pyjwt==2.9.0               # JSON Web Token encoding/decoding
 passlib[bcrypt]==1.7.4     # Password hashing with bcrypt
+bcrypt==4.2.1              # Explicit pin for Python 3.13 compatibility
 
 # Configuration
 python-dotenv==1.0.1       # Load .env files

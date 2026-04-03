@@ -21,6 +21,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.db.init_db import init_db
+from app.api.v1.api_router import api_router
 
 
 # ---------------------------------------------------------------------------
@@ -102,6 +103,12 @@ app.add_middleware(
     allow_methods=["*"],            # Allow all HTTP methods
     allow_headers=["*"],            # Allow all headers
 )
+
+
+# ---------------------------------------------------------------------------
+# API Routes — Include all versioned endpoint routers
+# ---------------------------------------------------------------------------
+app.include_router(api_router)
 
 
 # ---------------------------------------------------------------------------
