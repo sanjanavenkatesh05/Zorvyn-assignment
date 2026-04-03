@@ -1,0 +1,30 @@
+# =============================================================================
+# Zorvyn Finance Backend — Python Dependencies
+# =============================================================================
+# Core framework
+fastapi==0.115.0           # Async web framework with auto OpenAPI docs
+uvicorn[standard]==0.30.0  # ASGI server for running FastAPI
+
+# Database (MongoDB)
+motor==3.6.0               # Async MongoDB driver
+beanie==1.26.0             # Async ODM for MongoDB (built on Motor)
+
+# Authentication & Security
+pyjwt==2.9.0               # JSON Web Token encoding/decoding
+passlib[bcrypt]==1.7.4     # Password hashing with bcrypt
+
+# Configuration
+python-dotenv==1.0.1       # Load .env files
+pydantic[email]==2.9.0     # Data validation with email support
+pydantic-settings==2.5.0   # Settings management from environment
+
+# Rate Limiting
+slowapi==0.1.9             # Rate limiting middleware for FastAPI
+
+# HTTP client (used by FastAPI's OAuth2 form and testing)
+python-multipart==0.0.12   # Required for form data parsing (OAuth2PasswordRequestForm)
+httpx==0.27.0              # Async HTTP client (used in tests)
+
+# Testing
+pytest==8.3.0              # Test framework
+pytest-asyncio==0.24.0     # Async test support for pytest

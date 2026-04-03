@@ -1,0 +1,55 @@
+# =============================================================================
+# Zorvyn Finance Backend — Docker Compose Configuration
+# =============================================================================
+# Orchestrates two services:
+#   1. api   — FastAPI application (Python 3.11)
+#   2. mongo — MongoDB 7 database
+#
+# Usage:
+#   docker compose up --build        # Build and start both services
+#   docker compose down              # Stop services
+#   docker compose down -v           # Stop and remove data volumes
+#   docker compose logs -f api       # Follow API logs
+#
+# After starting:
+#   API:         http://localhost:8000
+#   Swagger UI:  http://localhost:8000/docs
+#   MongoDB:     mongodb://localhost:27017
+# =============================================================================
+
+services:
+  # ── FastAPI Application ──────────────────────────────────────────────────
+  api:
+    build:
+      context: ./finance_backend     # Build from the finance_backend directory
+      dockerfile: Dockerfile
+    container_name: zorvyn-api
+    ports:
+      - "8000:8000"                  # Expose API on host port 8000
+    env_file:
+      - ./finance_backend/.env       # Load environment variables
+    volumes:
+      # Mount source code for hot-reloading during development.
+      # Changes to Python files will auto-restart the server.
+      - ./finance_backend:/app
+    depends_on:
+      mongo:
+        condition: service_started   # Wait for MongoDB to start
+    restart: unless-stopped          # Auto-restart on crash
+
+  # ── MongoDB Database ────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7                   # Official MongoDB 7 image
+    container_name: zorvyn-mongo
+    ports:
+      - "27017:27017"                # Expose MongoDB on host port 27017
+    volumes:
+      # Persist database data across container restarts.
+      # Use `docker compose down -v` to wipe data completely.
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+# ── Named Volumes ────────────────────────────────────────────────────────────
+volumes:
+  mongo_data:
+    driver: local                    # Store MongoDB data on host filesystem
