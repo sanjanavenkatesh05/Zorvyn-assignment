@@ -20,6 +20,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.db.init_db import init_db
+
 
 # ---------------------------------------------------------------------------
 # Lifespan — runs on startup and shutdown
@@ -32,10 +34,8 @@ async def lifespan(app: FastAPI):
     - Shutdown: (cleanup happens automatically when context exits)
     """
     # ── Startup ───────────────────────────────────────────────────────
-    # NOTE: init_db() will be implemented in Module 2.
-    # For now, we log a placeholder message to verify lifespan works.
     print("🚀 Starting Zorvyn Finance API...")
-    print("📦 Database initialization placeholder (Module 2)")
+    await init_db()  # Connect to MongoDB and initialize Beanie
     yield
     # ── Shutdown ──────────────────────────────────────────────────────
     print("🛑 Shutting down Zorvyn Finance API...")
