@@ -1,5 +1,12 @@
 # Zorvyn Finance Dashboard
 
+### 🔗 Live Links & Documentation
+*   **Live Application (Render):** [https://zorvyn-assignment-3.onrender.com](https://zorvyn-assignment-3.onrender.com)
+*   **Postman API Documentation:** [https://documenter.getpostman.com/view/53739157/2sBXiqDUBh](https://documenter.getpostman.com/view/53739157/2sBXiqDUBh)
+*   **E2E Testing Documentation:** [https://documenter.getpostman.com/view/53739157/2sBXiqDo4B](https://documenter.getpostman.com/view/53739157/2sBXiqDo4B)
+
+---
+
 A high-performance, production-ready backend built for the Zorvyn Finance Dashboard. It provides a robust foundation for managing financial records, analyzing trends, and enforcing strict role-based access control (RBAC).
 
 ## Directory Structure
