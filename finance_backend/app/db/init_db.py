@@ -53,7 +53,11 @@ async def init_db() -> None:
     # ── Step 1: Create the async Motor client ────────────────────────────
     # Motor's AsyncIOMotorClient is lazy — it doesn't actually connect
     # until the first database operation. This is by design for async apps.
-    _motor_client = AsyncIOMotorClient(settings.MONGO_URI)
+    import certifi
+    _motor_client = AsyncIOMotorClient(
+        settings.MONGO_URI,
+        tlsCAFile=certifi.where()  # Crucial for Atlas connections in slim Docker images
+    )
 
     # ── Step 2: Get the database reference ───────────────────────────────
     database = _motor_client[settings.MONGO_DB_NAME]

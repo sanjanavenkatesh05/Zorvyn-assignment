@@ -8,6 +8,8 @@ uvicorn[standard]==0.30.0  # ASGI server for running FastAPI
 # Database (MongoDB)
 motor==3.6.0               # Async MongoDB driver
 beanie==1.26.0             # Async ODM for MongoDB (built on Motor)
+dnspython==2.7.0           # Required for mongodb+srv:// resolution
+certifi==2024.8.30         # SSL/TLS root certificates (fixes Atlas handshake errors)
 
 # Authentication & Security
 pyjwt==2.9.0               # JSON Web Token encoding/decoding
